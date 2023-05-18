@@ -11,7 +11,6 @@ import com.skillboxpractice.humblr.databinding.ActivityOnboardBinding
 // Переход на активити авторизации
 class OnboardActivity : AppCompatActivity() {
 
-    lateinit var adapter: OnboardAdapter
     private lateinit var binding: ActivityOnboardBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,9 +21,6 @@ class OnboardActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.lifecycleOwner = this
-
-        //TODO Теперь это лишняя переменная
-        binding.parentActivity = this
 
         binding.viewPager.adapter = OnboardAdapter(this)
 

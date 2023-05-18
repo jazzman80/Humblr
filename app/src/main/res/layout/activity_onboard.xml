@@ -4,10 +4,6 @@
 
     <data>
 
-        <variable
-            name="parentActivity"
-            type="com.skillboxpractice.humblr.onboard.OnboardActivity" />
-
     </data>
 
     <LinearLayout
