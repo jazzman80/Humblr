@@ -3,20 +3,17 @@
 
     <data>
 
-        <variable
-            name="parentActivity"
-            type="com.skillboxpractice.humblr.onboard.OnboardActivity" />
-
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.viewpager2.widget.ViewPager2
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:adapter="@{parentActivity.adapter}" />
+            android:gravity="center"
+            android:text="Onboard Fragment 3" />
 
     </FrameLayout>
 </layout>
