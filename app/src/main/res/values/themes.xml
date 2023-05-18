@@ -3,15 +3,20 @@
     <style name="Theme.Humblr" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#FF5222D0</item>
-        <item name="colorPrimaryVariant">#805222D0</item>
+        <item name="colorPrimaryVariant">#FFA890E7</item>
         <item name="colorOnPrimary">#FFFFFFFF</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#FFEC615B</item>
-        <item name="colorSecondaryVariant">#80EC615B</item>
+        <item name="colorSecondaryVariant">#FFF5B0AD</item>
         <item name="colorOnSecondary">#FFFFFFFF</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
         <item name="colorOnSurface">#FFC4C4C4</item>
+    </style>
+
+    <style name="OnboardButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textAppearance">@style/big_body_text</item>
+        <item name="android:textColor">?attr/colorPrimaryVariant</item>
     </style>
 </resources>

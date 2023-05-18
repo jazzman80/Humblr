@@ -1,10 +1,12 @@
 package com.skillboxpractice.humblr.onboard
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.tabs.TabLayoutMediator
 import com.skillboxpractice.humblr.R
+import com.skillboxpractice.humblr.auth.AuthActivity
 import com.skillboxpractice.humblr.databinding.ActivityOnboardBinding
 
 // Управление страницами онбординга
@@ -21,6 +23,7 @@ class OnboardActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.lifecycleOwner = this
+        binding.parentActivity = this
 
         binding.viewPager.adapter = OnboardAdapter(this)
 
@@ -29,6 +32,12 @@ class OnboardActivity : AppCompatActivity() {
             binding.viewPager
         ) { _, _ -> }.attach()
 
+    }
+
+    fun navigateToAuth() {
+        val intent = Intent(this, AuthActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 }

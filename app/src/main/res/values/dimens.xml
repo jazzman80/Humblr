@@ -3,6 +3,8 @@
     <dimen name="large_margin">43dp</dimen>
     <dimen name="negative_large_margin">-43dp</dimen>
 
+    <dimen name="big_margin">20dp</dimen>
+
     <dimen name="small_margin">7dp</dimen>
     <dimen name="negative_small_margin">-7dp</dimen>
 </resources>

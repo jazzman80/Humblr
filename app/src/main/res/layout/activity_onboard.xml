@@ -4,6 +4,10 @@
 
     <data>
 
+        <variable
+            name="parentActivity"
+            type="com.skillboxpractice.humblr.onboard.OnboardActivity" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,13 +16,24 @@
         android:orientation="vertical">
 
         <com.google.android.material.appbar.MaterialToolbar
+            android:padding="@dimen/big_margin"
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:logo="@drawable/ic_onboard_toolbar" />
+            app:logo="@drawable/ic_onboard_toolbar">
+
+            <Button
+                style="@style/OnboardButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:onClick="@{()->parentActivity.navigateToAuth()}"
+                android:text="@string/skip" />
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"
