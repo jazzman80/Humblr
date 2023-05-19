@@ -10,9 +10,12 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.skillboxpractice.humblr.R
 import com.skillboxpractice.humblr.auth.AuthActivity
 import com.skillboxpractice.humblr.databinding.ActivityOnboardBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 // Управление страницами онбординга
 // Переход на активити авторизации
+
+@AndroidEntryPoint
 class OnboardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOnboardBinding

@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.skillboxpractice.humblr.R
 import com.skillboxpractice.humblr.databinding.ActivityAuthBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 // Управляет авторизацией пользователя
 // Переход на активити основного приложения
+
+@AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

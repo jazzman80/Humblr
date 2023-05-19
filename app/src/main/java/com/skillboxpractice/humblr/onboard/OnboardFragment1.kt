@@ -8,7 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.skillboxpractice.humblr.R
 import com.skillboxpractice.humblr.databinding.FragmentOnboard1Binding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OnboardFragment1 : Fragment() {
 
     private var _binding: FragmentOnboard1Binding? = null
