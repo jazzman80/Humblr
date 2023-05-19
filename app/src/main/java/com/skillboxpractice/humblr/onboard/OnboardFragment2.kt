@@ -23,13 +23,6 @@ class OnboardFragment2 : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // binding.fragment = this
-        binding.lifecycleOwner = this
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
