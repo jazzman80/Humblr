@@ -2,6 +2,7 @@
 <resources>
     <dimen name="huge_font_size">20sp</dimen>
     <dimen name="large_font_size">14sp</dimen>
+    <dimen name="medium_font_size">14sp</dimen>
 
     <style name="title_text">
         <item name="android:fontFamily">@font/roboto_bold</item>
@@ -11,6 +12,11 @@
     <style name="big_body_text">
         <item name="android:fontFamily">@font/roboto_regular</item>
         <item name="android:textSize">@dimen/large_font_size</item>
+    </style>
+
+    <style name="regular_body_text">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/medium_font_size</item>
     </style>
 
 </resources>

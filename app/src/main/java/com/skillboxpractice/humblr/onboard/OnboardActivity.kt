@@ -9,14 +9,19 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.material.tabs.TabLayoutMediator
 import com.skillboxpractice.humblr.R
 import com.skillboxpractice.humblr.auth.AuthActivity
+import com.skillboxpractice.humblr.core.Repository
 import com.skillboxpractice.humblr.databinding.ActivityOnboardBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 // Управление страницами онбординга
 // Переход на активити авторизации
 
 @AndroidEntryPoint
 class OnboardActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var repository: Repository
 
     private lateinit var binding: ActivityOnboardBinding
     val selectedTab: LiveData<Int> get() = _selectedTab
@@ -33,6 +38,7 @@ class OnboardActivity : AppCompatActivity() {
         binding.parentActivity = this
 
         binding.viewPager.adapter = OnboardAdapter(this)
+        binding.viewPager.setPageTransformer(ZoomOutPageTransformer())
 
         TabLayoutMediator(
             binding.tabLayout,
@@ -42,6 +48,9 @@ class OnboardActivity : AppCompatActivity() {
     }
 
     fun navigateToAuth() {
+
+        repository.onboardDone()
+
         val intent = Intent(this, AuthActivity::class.java)
         startActivity(intent)
         finish()

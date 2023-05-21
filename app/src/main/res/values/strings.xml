@@ -8,4 +8,6 @@
     <string name="onboard_message_3">The favorites tab stores bookmarks with comments and subs. In the profile you will find information about yourself.</string>
     <string name="skip">Skip</string>
     <string name="done">Done</string>
+    <string name="login">Login</string>
+    <string name="tagline">Find friends with Humblr</string>
 </resources>

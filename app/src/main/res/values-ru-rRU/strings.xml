@@ -9,4 +9,6 @@
     <string name="onboard_message_3">Вкладка избранное хранит закладки с комментариями и сабами. В профиле ты найдёшь информацию о себе.</string>
     <string name="skip">Пропустить</string>
     <string name="done">Готово</string>
+    <string name="login">Войти</string>
+    <string name="tagline">Найди единомышленников с Humblr</string>
 </resources>
