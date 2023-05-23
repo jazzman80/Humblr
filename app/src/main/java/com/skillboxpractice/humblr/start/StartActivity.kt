@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.skillboxpractice.humblr.auth.AuthActivity
 import com.skillboxpractice.humblr.core.Repository
+import com.skillboxpractice.humblr.main.MainActivity
 import com.skillboxpractice.humblr.onboard.OnboardActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -23,7 +24,9 @@ class StartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val intent: Intent = if (repository.isOnboardDone()) {
+        val intent: Intent = if (repository.accessToken.isNotEmpty()) {
+            Intent(this, MainActivity::class.java)
+        } else if (repository.isOnboardDone) {
             Intent(this, AuthActivity::class.java)
         } else {
             Intent(this, OnboardActivity::class.java)

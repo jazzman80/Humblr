@@ -29,7 +29,18 @@
             android:exported="true" />
         <activity
             android:name=".auth.AuthActivity"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="humblr"
+                    android:scheme="com.skillboxpractice.humblr" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".main.MainActivity"
             android:exported="true" />

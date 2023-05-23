@@ -11,4 +11,5 @@
     <string name="done">Готово</string>
     <string name="login">Войти</string>
     <string name="tagline">Найди единомышленников с Humblr</string>
+    <string name="auth_error">Во время авторизации возникла ошибка. Попробуйте войти позже</string>
 </resources>

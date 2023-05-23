@@ -3,38 +3,66 @@ package com.skillboxpractice.humblr.core
 import android.content.Context
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
+import com.skillboxpractice.humblr.entity.Access
 import dagger.hilt.android.qualifiers.ApplicationContext
-import net.openid.appauth.AuthorizationRequest
-import net.openid.appauth.AuthorizationServiceConfiguration
-import net.openid.appauth.ResponseTypeValues
+import retrofit2.Response
+import retrofit2.awaitResponse
+import java.time.Instant
+import java.util.Base64
 import javax.inject.Inject
 
 class RepositoryImplementation @Inject constructor(
-    @ApplicationContext private val appContext: Context
+    @ApplicationContext private val appContext: Context,
+    private val apiService: ApiService
 ) : Repository {
 
     private val preferenceFileKey = "PREFERENCE_FILE_KEY"
     private val onboardKey = "ONBOARD_KEY"
-    private val authUri = "https://www.reddit.com/api/v1/authorize"
+    private val accessTokenKey = "ACCESS_TOKEN_KEY"
+    private val refreshTokenKey = "REFRESH_TOKEN_KEY"
+    private val expiresInKey = "EXPIRES_IN_KEY"
+    private val authUri = "https://old.reddit.com/api/v1/authorize"
     private val tokenUri = "https://www.reddit.com/api/v1/access_token"
-    private val clientId = "IktEA1UocDhvVVrO7VHScw"
-    private val responseType = ResponseTypeValues.CODE
-    private var state = ""
+    private val clientId = "WVbTDJRNnWgywvGrYAkyRw"
+    private val responseType = "code"
+    private var state = "state"
     private val redirectUri = "com.skillboxpractice.humblr://humblr"
-    private val scope = ""
+    private val duration = "permanent"
+    private val scope = "*"
+    private val authString = Base64.getEncoder().encodeToString("$clientId:".toByteArray())
+
+    private var _accessToken = ""
+    override val accessToken: String
+        get() = _accessToken
+
+    private suspend fun validAccessToken(): String {
+        return if (Instant.now().epochSecond < expiresIn) {
+            _accessToken
+        } else {
+            refreshToken()
+            _accessToken
+        }
+    }
+
+    private var refreshToken = ""
+    private var expiresIn = 0L
 
     private var _isOnboardDone = false
+    override val isOnboardDone get() = _isOnboardDone
 
     init {
 
-        // Загружаем состояние онбординга
+        // Загружаем состояние онбординга и токены
         val sharedPreferences =
             appContext.getSharedPreferences(preferenceFileKey, AppCompatActivity.MODE_PRIVATE)
         _isOnboardDone = sharedPreferences.getBoolean(onboardKey, false)
-    }
 
-    override fun isOnboardDone(): Boolean {
-        return _isOnboardDone
+        if (sharedPreferences.contains(accessTokenKey))
+            _accessToken = sharedPreferences.getString(accessTokenKey, "")!!
+        if (sharedPreferences.contains(refreshTokenKey))
+            refreshToken = sharedPreferences.getString(refreshTokenKey, "")!!
+
+        expiresIn = sharedPreferences.getLong(expiresInKey, 0L)
     }
 
     override fun onboardDone() {
@@ -50,22 +78,66 @@ class RepositoryImplementation @Inject constructor(
         edit.clear()
     }
 
-    override fun authRequest(): AuthorizationRequest {
-        val serviceConfig = AuthorizationServiceConfiguration(
-            Uri.parse(authUri),
-            Uri.parse(tokenUri)
-        )
-
-        val authRequestBuilder = AuthorizationRequest.Builder(
-            serviceConfig,
-            clientId,
-            responseType,
-            Uri.parse(redirectUri)
-        )
-
-        return authRequestBuilder
-            .setScope(scope)
+    override fun composeUrl(): Uri? {
+        return Uri.parse(authUri)
+            .buildUpon()
+            .appendQueryParameter("client_id", clientId)
+            .appendQueryParameter("response_type", responseType)
+            .appendQueryParameter("state", state)
+            .appendQueryParameter("redirect_uri", redirectUri)
+            .appendQueryParameter("duration", duration)
+            .appendQueryParameter("scope", scope)
             .build()
+    }
+
+    override suspend fun getAccessToken(authCode: String): Response<Access> {
+
+        val response = apiService.getAccessToken(
+            tokenUri,
+            "Basic $authString",
+            "authorization_code",
+            authCode,
+            redirectUri
+        ).awaitResponse()
+
+        if (response.isSuccessful) {
+            _accessToken = response.body()!!.accessToken
+            refreshToken = response.body()!!.refreshToken
+            expiresIn = response.body()!!.expiresIn
+
+            save()
+        }
+        return response
+    }
+
+
+    private suspend fun refreshToken() {
+        val response = apiService.refreshToken(
+            tokenUri,
+            "Basic $authString",
+            "refresh_token",
+            refreshToken
+        ).awaitResponse()
+
+        if (response.isSuccessful) {
+            _accessToken = response.body()!!.accessToken
+            expiresIn = response.body()!!.expiresIn
+
+            save()
+        }
+    }
+
+    private fun save() {
+        // Сохраняем токены
+        val edit =
+            appContext.getSharedPreferences(
+                preferenceFileKey,
+                AppCompatActivity.MODE_PRIVATE
+            ).edit()
+        edit.putString(accessTokenKey, _accessToken).apply()
+        edit.putString(refreshTokenKey, refreshToken).apply()
+        edit.putLong(expiresInKey, expiresIn).apply()
+        edit.clear()
     }
 
 }

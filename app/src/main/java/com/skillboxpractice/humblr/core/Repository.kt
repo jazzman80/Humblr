@@ -1,11 +1,15 @@
 package com.skillboxpractice.humblr.core
 
-import net.openid.appauth.AuthorizationRequest
+import android.net.Uri
+import com.skillboxpractice.humblr.entity.Access
+import retrofit2.Response
 
 interface Repository {
 
-    fun isOnboardDone(): Boolean
+    val accessToken: String
+    val isOnboardDone: Boolean
     fun onboardDone()
-    fun authRequest(): AuthorizationRequest
+    fun composeUrl(): Uri?
+    suspend fun getAccessToken(authCode: String): Response<Access>
 
 }

@@ -10,4 +10,5 @@
     <string name="done">Done</string>
     <string name="login">Login</string>
     <string name="tagline">Find friends with Humblr</string>
+    <string name="auth_error">An error occurred during authorization. Try logging in later</string>
 </resources>
