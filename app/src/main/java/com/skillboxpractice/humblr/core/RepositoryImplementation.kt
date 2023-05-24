@@ -25,6 +25,8 @@ class RepositoryImplementation @Inject constructor(
     private val tokenUri = "https://www.reddit.com/api/v1/access_token"
     private val clientId = "WVbTDJRNnWgywvGrYAkyRw"
     private val responseType = "code"
+
+    // TODO Реализовать state - при запросе токена генерируется случайная строка и при получении токена проверяется соответствие
     private var state = "state"
     private val redirectUri = "com.skillboxpractice.humblr://humblr"
     private val duration = "permanent"

@@ -13,10 +13,20 @@
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
         <item name="colorOnSurface">#FFC4C4C4</item>
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
     </style>
 
     <style name="OnboardButton" parent="Widget.Material3.Button.TextButton">
         <item name="android:textAppearance">@style/big_body_text</item>
         <item name="android:textColor">?attr/colorPrimaryVariant</item>
     </style>
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="itemIconTint">@drawable/bottom_bar_selector</item>
+        <item name="itemIconSize">40dp</item>
+        <item name="labelVisibilityMode">unlabeled</item>
+        <item name="menu">@menu/menu_main_bottom</item>
+    </style>
+
 </resources>
