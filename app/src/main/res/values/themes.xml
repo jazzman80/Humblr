@@ -27,10 +27,11 @@
         <item name="itemIconSize">40dp</item>
         <item name="labelVisibilityMode">unlabeled</item>
         <item name="menu">@menu/menu_main_bottom</item>
+        <item name="itemActiveIndicatorStyle">@style/bottom_navigation_indicator</item>
     </style>
 
     <style name="bottom_navigation_indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">#00FFFFFF</item>
+        <item name="android:color">@color/transparent</item>
     </style>
 
 </resources>
