@@ -83,7 +83,7 @@
 
         <TextView
             android:id="@+id/tagline"
-            style="@style/regular_body_text"
+            style="@style/medium_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tagline"

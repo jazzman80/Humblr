@@ -2,5 +2,6 @@
 <resources>
     <color name="brand_purple">#FF5222D0</color>
     <color name="shade">#CCFFFFFF</color>
+    <color name="light_shade">#15FFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
 </resources>

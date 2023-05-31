@@ -14,4 +14,7 @@
     <string name="profile" translatable="false">profile</string>
     <string name="favorites" translatable="false">favorites</string>
     <string name="feed" translatable="false">feed</string>
+    <string name="search">Search</string>
+    <string name="new_feeds">New</string>
+    <string name="popular">Popular</string>
 </resources>

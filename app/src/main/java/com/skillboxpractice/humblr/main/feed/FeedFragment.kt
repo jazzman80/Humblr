@@ -1,4 +1,4 @@
-package com.skillboxpractice.humblr.main
+package com.skillboxpractice.humblr.main.feed
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.skillboxpractice.humblr.R
 import com.skillboxpractice.humblr.databinding.FragmentFeedBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FeedFragment : Fragment() {
 
+    private val viewModel: FeedViewModel by viewModels()
     private var _binding: FragmentFeedBinding? = null
     private val binding get() = _binding!!
 
@@ -26,8 +30,9 @@ class FeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // binding.fragment = this
+        binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
     }
 
     override fun onDestroyView() {

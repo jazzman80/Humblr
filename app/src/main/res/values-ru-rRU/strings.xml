@@ -12,4 +12,7 @@
     <string name="login">Войти</string>
     <string name="tagline">Найди единомышленников с Humblr</string>
     <string name="auth_error">Во время авторизации возникла ошибка. Попробуйте войти позже</string>
+    <string name="search">Поиск</string>
+    <string name="popular">Популярное</string>
+    <string name="new_feeds">Новое</string>
 </resources>

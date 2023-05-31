@@ -2,7 +2,9 @@ package com.skillboxpractice.humblr.core
 
 import com.skillboxpractice.humblr.entity.Access
 import com.skillboxpractice.humblr.entity.Refresh
+import com.skillboxpractice.humblr.entity.SubsListing
 import retrofit2.Call
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -26,4 +28,13 @@ interface ApiService {
         @Query("grant_type") grantType: String,
         @Query("refresh_token") refreshToken: String
     ): Call<Refresh>
+
+    @GET("/subreddits/new")
+    fun getNewSubs(
+        @Header("Authorization") auth: String,
+        @Query("after") after: String?,
+//        @Query("before") before: String?,
+//        @Query("count") count: Int,
+//        @Query("limit") limit: Int
+    ): Call<SubsListing>
 }

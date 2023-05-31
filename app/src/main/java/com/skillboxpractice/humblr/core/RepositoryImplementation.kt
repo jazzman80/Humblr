@@ -3,7 +3,10 @@ package com.skillboxpractice.humblr.core
 import android.content.Context
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.skillboxpractice.humblr.entity.Access
+import com.skillboxpractice.humblr.entity.Subreddit
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Response
 import retrofit2.awaitResponse
@@ -25,24 +28,23 @@ class RepositoryImplementation @Inject constructor(
     private val tokenUri = "https://www.reddit.com/api/v1/access_token"
     private val clientId = "WVbTDJRNnWgywvGrYAkyRw"
     private val responseType = "code"
+    private val pageSize = 25
 
     // TODO Реализовать state - при запросе токена генерируется случайная строка и при получении токена проверяется соответствие
     private var state = "state"
     private val redirectUri = "com.skillboxpractice.humblr://humblr"
     private val duration = "permanent"
-    private val scope = "*"
+    private val scope = "read"
     private val authString = Base64.getEncoder().encodeToString("$clientId:".toByteArray())
 
     private var _accessToken = ""
     override val accessToken: String
         get() = _accessToken
+    private val auth = "Bearer $_accessToken"
 
-    private suspend fun validAccessToken(): String {
-        return if (Instant.now().epochSecond < expiresIn) {
-            _accessToken
-        } else {
+    private suspend fun validateAccessToken() {
+        if (Instant.now().epochSecond >= expiresIn) {
             refreshToken()
-            _accessToken
         }
     }
 
@@ -65,6 +67,7 @@ class RepositoryImplementation @Inject constructor(
             refreshToken = sharedPreferences.getString(refreshTokenKey, "")!!
 
         expiresIn = sharedPreferences.getLong(expiresInKey, 0L)
+
     }
 
     override fun onboardDone() {
@@ -112,20 +115,32 @@ class RepositoryImplementation @Inject constructor(
         return response
     }
 
+    override fun getNewSubs(): Pager<String, Subreddit> {
+        //validateAccessToken()
+        return Pager(
+            PagingConfig(pageSize)
+        ) {
+            NewSubsPagingSource("Bearer $_accessToken", apiService, pageSize)
+        }
 
-    private suspend fun refreshToken() {
-        val response = apiService.refreshToken(
-            tokenUri,
-            "Basic $authString",
-            "refresh_token",
-            refreshToken
-        ).awaitResponse()
+    }
 
-        if (response.isSuccessful) {
-            _accessToken = response.body()!!.accessToken
-            expiresIn = response.body()!!.expiresIn
 
-            save()
+    override suspend fun refreshToken() {
+        if (Instant.now().epochSecond >= expiresIn) {
+            val response = apiService.refreshToken(
+                tokenUri,
+                "Basic $authString",
+                "refresh_token",
+                refreshToken
+            ).awaitResponse()
+
+            if (response.isSuccessful) {
+                _accessToken = response.body()!!.accessToken
+                expiresIn = response.body()!!.expiresIn
+
+                save()
+            }
         }
     }
 
