@@ -62,12 +62,12 @@
             android:text="@string/onboard_title_3"
             android:textAlignment="center"
             android:textFontWeight="100"
-            app:layout_constraintBottom_toTopOf="@id/message"
+            app:layout_constraintBottom_toTopOf="@id/description"
             app:layout_constraintEnd_toEndOf="@id/end"
             app:layout_constraintStart_toStartOf="@id/start" />
 
         <TextView
-            android:id="@+id/message"
+            android:id="@+id/description"
             style="@style/big_body"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

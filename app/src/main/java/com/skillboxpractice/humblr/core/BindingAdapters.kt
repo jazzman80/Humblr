@@ -1,8 +1,12 @@
 package com.skillboxpractice.humblr.core
 
 import android.view.View
+import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import coil.imageLoader
+import coil.request.ImageRequest
 import com.google.android.material.tabs.TabLayout
+import com.skillboxpractice.humblr.R
 
 @BindingAdapter("app:onTabSelected")
 fun onTabSelected(tabLayout: TabLayout, listener: (Int) -> Unit) {
@@ -35,4 +39,22 @@ fun visibleOnPopular(view: View, listType: SubListType) {
 fun visibleIf(view: View, value: Boolean) {
     if (value) view.visibility = View.VISIBLE
     else view.visibility = View.GONE
+}
+
+@BindingAdapter("app:loadImage")
+fun loadImage(view: ImageView, imageUrl: String?) {
+    val imageLoader = view.context.imageLoader
+    val request = ImageRequest.Builder(view.context)
+        .data(imageUrl)
+        .placeholder(R.drawable.ic_placeholder)
+        .target(
+            onStart = { placeholder ->
+                view.setImageDrawable(placeholder)
+            },
+            onSuccess = { image ->
+                view.setImageDrawable(image)
+            }
+        )
+        .build()
+    imageLoader.enqueue(request)
 }
