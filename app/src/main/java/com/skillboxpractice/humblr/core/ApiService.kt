@@ -37,4 +37,18 @@ interface ApiService {
 //        @Query("count") count: Int,
 //        @Query("limit") limit: Int
     ): Call<SubsListing>
+
+    @GET("/subreddits/popular")
+    fun getPopularSubs(
+        @Header("Authorization") auth: String,
+        @Query("after") after: String?,
+        @Query("limit") limit: Int
+    ): Call<SubsListing>
+
+    @GET("/subreddits/popular")
+    fun searchSubs(
+        @Header("Authorization") auth: String,
+        @Query("after") after: String?,
+        @Query("q") query: String
+    ): Call<SubsListing>
 }

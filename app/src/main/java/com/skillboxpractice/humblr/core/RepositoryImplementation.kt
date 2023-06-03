@@ -144,6 +144,22 @@ class RepositoryImplementation @Inject constructor(
         }
     }
 
+    override fun getPopularSubs(): Pager<String, Subreddit> {
+        return Pager(
+            PagingConfig(pageSize)
+        ) {
+            PopularSubsPagingSource("Bearer $_accessToken", apiService, pageSize)
+        }
+    }
+
+    override fun searchSubs(query: String): Pager<String, Subreddit> {
+        return Pager(
+            PagingConfig(pageSize)
+        ) {
+            PopularSubsPagingSource("Bearer $_accessToken", apiService, pageSize)
+        }
+    }
+
     private fun save() {
         // Сохраняем токены
         val edit =

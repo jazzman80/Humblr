@@ -97,20 +97,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tab_layout"
             app:spanCount="1"
-            app:visibleOnNew="@{viewModel.subsListType}"
             tools:listitem="@layout/item_subreddit" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:text="POPULAR"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/end"
-            app:layout_constraintStart_toStartOf="@id/start"
-            app:layout_constraintTop_toBottomOf="@id/tab_layout"
-            app:visibleOnPopular="@{viewModel.subsListType}"
-            tools:visibility="gone" />
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            adapter="@{viewModel.popularSubsAdapter}"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            android:gravity="center"-->
+        <!--            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/tab_layout"-->
+        <!--            app:spanCount="1"-->
+        <!--            app:visibleOnPopular="@{viewModel.subsListType}"-->
+        <!--            tools:listitem="@layout/item_subreddit" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="POPULAR"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="@id/end"-->
+        <!--            app:layout_constraintStart_toStartOf="@id/start"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/tab_layout"-->
+        <!--            app:visibleOnPopular="@{viewModel.subsListType}"-->
+        <!--            tools:visibility="gone" />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

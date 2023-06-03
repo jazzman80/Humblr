@@ -15,5 +15,7 @@ interface Repository {
     suspend fun getAccessToken(authCode: String): Response<Access>
     fun getNewSubs(): Pager<String, Subreddit>
     suspend fun refreshToken()
+    fun getPopularSubs(): Pager<String, Subreddit>
+    fun searchSubs(): Pager<String, Subreddit>
 
 }

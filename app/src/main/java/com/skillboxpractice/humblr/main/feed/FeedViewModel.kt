@@ -17,15 +17,30 @@ class FeedViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
     private val newSubsFlow = repository.getNewSubs().flow.cachedIn(viewModelScope)
+    private val popularSubsFlow = repository.getPopularSubs().flow.cachedIn(viewModelScope)
 
     val newSubsAdapter = FeedAdapter()
+    val popularSubsAdapter = FeedAdapter()
 
     val subsListType: LiveData<SubListType> get() = _subsListType
     private val _subsListType = MutableLiveData(SubListType.NEW)
 
     val onTabSelected = fun(position: Int) {
-        if (position == 0) _subsListType.value = SubListType.NEW
-        else _subsListType.value = SubListType.POPULAR
+        if (position == 0) {
+            _subsListType.value = SubListType.NEW
+            viewModelScope.launch {
+                newSubsFlow.collectLatest {
+                    newSubsAdapter.submitData(it)
+                }
+            }
+        } else {
+            _subsListType.value = SubListType.POPULAR
+            viewModelScope.launch {
+                popularSubsFlow.collectLatest {
+                    newSubsAdapter.submitData(it)
+                }
+            }
+        }
     }
 
     init {
@@ -35,6 +50,7 @@ class FeedViewModel @Inject constructor(
             newSubsFlow.collectLatest { pagingData ->
                 newSubsAdapter.submitData(pagingData)
             }
+
         }
     }
 
