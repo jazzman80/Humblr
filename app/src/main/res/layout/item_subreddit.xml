@@ -52,75 +52,20 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/title" />
 
-                <ImageView
-                    app:loadImage="@{model.data.headerImg}"
-                    android:id="@+id/image"
-                    android:layout_width="75dp"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="@dimen/medium_margin"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/title"
-                    tools:src="@tools:sample/avatars" />
-
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/image_barrier"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="end"
-                    app:constraint_referenced_ids="image" />
-
                 <TextView
                     android:id="@+id/description"
                     android:text="@{model.data.description}"
                     style="@style/medium_body"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/small_margin"
                     android:ellipsize="end"
-                    android:maxLines="6"
+                    android:layout_marginTop="@dimen/small_margin"
+                    app:layout_constraintStart_toStartOf="@id/title"
                     app:layout_constraintEnd_toStartOf="@id/subscribe_icon"
-                    app:layout_constraintStart_toEndOf="@id/image_barrier"
-                    app:layout_constraintTop_toTopOf="@id/image"
+                    app:layout_constraintTop_toBottomOf="@id/title"
+                    tools:maxLines="6"
                     tools:text="@tools:sample/lorem/random" />
 
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/barrier"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="image,description" />
-
-                <TextView
-                    android:id="@+id/author"
-                    style="@style/medium_body"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/medium_margin"
-                    android:textColor="?attr/colorPrimary"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/barrier"
-                    tools:text="@tools:sample/first_names" />
-
-                <ImageView
-                    android:id="@+id/comments_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_comments"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/comments_count" />
-
-                <TextView
-                    android:id="@+id/comments_count"
-                    style="@style/medium_body"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/medium_margin"
-                    android:layout_marginEnd="@dimen/small_margin"
-                    android:textColor="?attr/colorPrimary"
-                    app:layout_constraintEnd_toStartOf="@id/comments_icon"
-                    app:layout_constraintTop_toBottomOf="@id/barrier"
-                    tools:text="1224" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
