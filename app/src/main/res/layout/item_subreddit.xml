@@ -43,11 +43,13 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@tools:sample/lorem/random" />
 
-                <ImageView
+                <CheckBox
                     android:id="@+id/subscribe_icon"
+                    app:buttonIcon="@drawable/selector_subscribe"
+                    app:buttonIconTint="@color/color_subscribe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_subscribe"
+                    app:buttonTint="@color/transparent"
                     app:layout_constraintBottom_toBottomOf="@id/title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/title" />
