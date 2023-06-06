@@ -27,7 +27,6 @@ class FeedAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.parentViewModel = this.parentViewModel
-        val fuckYou = getItem(position)
         holder.binding.model = getItem(position)
     }
 

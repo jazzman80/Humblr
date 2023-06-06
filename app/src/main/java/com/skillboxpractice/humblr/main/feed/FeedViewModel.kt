@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.skillboxpractice.humblr.core.Repository
-import com.skillboxpractice.humblr.core.SubListType
 import com.skillboxpractice.humblr.entity.SubscribeResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -19,26 +18,33 @@ class FeedViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel(), FeedAdapter.ParentViewModel {
     private val newSubsFlow = repository.getNewSubs().flow.cachedIn(viewModelScope)
+    private val popularSubsFlow = repository.getPopularSubs().flow.cachedIn(viewModelScope)
 
-    val newSubsAdapter = FeedAdapter(this)
-
-    val subsListType: LiveData<SubListType> get() = _subsListType
-    private val _subsListType = MutableLiveData(SubListType.NEW)
+    val subsAdapter = FeedAdapter(this)
 
     val error: LiveData<Boolean> get() = _error
     private val _error = MutableLiveData(false)
 
     val onTabSelected = fun(position: Int) {
-        if (position == 0) _subsListType.value = SubListType.NEW
-        else _subsListType.value = SubListType.POPULAR
+        viewModelScope.launch {
+            if (position == 0) {
+                newSubsFlow.collectLatest {
+                    subsAdapter.submitData(it)
+                }
+            } else {
+                popularSubsFlow.collectLatest {
+                    subsAdapter.submitData(it)
+                }
+            }
+        }
     }
 
     init {
         viewModelScope.launch {
             repository.refreshToken()
 
-            newSubsFlow.collectLatest { pagingData ->
-                newSubsAdapter.submitData(pagingData)
+            newSubsFlow.collectLatest {
+                subsAdapter.submitData(it)
             }
         }
     }
@@ -51,7 +57,11 @@ class FeedViewModel @Inject constructor(
                     if (isSubscribed) repository.unsubscribe(fullName)
                     else repository.subscribe(fullName)
 
-                if (!result.isSuccessful) _error.value = true
+                if (result.isSuccessful) {
+                    subsAdapter.refresh()
+                } else {
+                    _error.value = true
+                }
             } catch (e: Exception) {
                 _error.value = true
             }

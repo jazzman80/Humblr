@@ -1,12 +1,11 @@
 package com.skillboxpractice.humblr.core
 
-
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.skillboxpractice.humblr.entity.Subreddit
 import retrofit2.awaitResponse
 
-class NewSubsPagingSource(
+class PopularSubsPagingSource(
     private val auth: String,
     private val apiService: ApiService,
     private val limit: Int
@@ -15,20 +14,20 @@ class NewSubsPagingSource(
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Subreddit> {
 
         try {
-            val result = apiService.getNewSubs(
+            val result = apiService.getPopularSubs(
                 auth,
                 params.key,
                 limit
             ).awaitResponse()
 
-            return if (result.isSuccessful) {
-                LoadResult.Page(
+            if (result.isSuccessful) {
+                return LoadResult.Page(
                     data = result.body()!!.data.children,
                     prevKey = null,
                     nextKey = result.body()!!.data.after
                 )
             } else {
-                LoadResult.Error(throw Exception())
+                return LoadResult.Error(throw Exception())
             }
         } catch (e: Exception) {
             return LoadResult.Error(e)

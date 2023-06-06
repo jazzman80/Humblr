@@ -43,7 +43,6 @@ class FeedFragment : Fragment() {
                 Toast.LENGTH_LONG
             ).show()
         }
-
     }
 
     override fun onDestroyView() {

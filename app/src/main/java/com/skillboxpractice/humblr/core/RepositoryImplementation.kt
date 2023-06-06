@@ -126,6 +126,14 @@ class RepositoryImplementation @Inject constructor(
 
     }
 
+    override fun getPopularSubs(): Pager<String, Subreddit> {
+        return Pager(
+            PagingConfig(pageSize)
+        ) {
+            PopularSubsPagingSource("Bearer $_accessToken", apiService, pageSize)
+        }
+    }
+
 
     override suspend fun refreshToken() {
         if (Instant.now().epochSecond >= expiresIn) {

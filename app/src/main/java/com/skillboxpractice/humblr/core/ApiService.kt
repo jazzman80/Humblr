@@ -33,7 +33,15 @@ interface ApiService {
     @GET("/subreddits/new")
     fun getNewSubs(
         @Header("Authorization") auth: String,
-        @Query("after") after: String?
+        @Query("after") after: String?,
+        @Query("limit") limit: Int
+    ): Call<SubsListing>
+
+    @GET("/subreddits/popular")
+    fun getPopularSubs(
+        @Header("Authorization") auth: String,
+        @Query("after") after: String?,
+        @Query("limit") limit: Int
     ): Call<SubsListing>
 
     @POST("api/subscribe")

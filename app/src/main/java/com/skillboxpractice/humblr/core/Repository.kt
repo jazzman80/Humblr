@@ -15,6 +15,7 @@ interface Repository {
     fun composeUrl(): Uri?
     suspend fun getAccessToken(authCode: String): Response<Access>
     fun getNewSubs(): Pager<String, Subreddit>
+    fun getPopularSubs(): Pager<String, Subreddit>
     suspend fun refreshToken()
     suspend fun unsubscribe(fullName: String?): Response<SubscribeResponse>
     suspend fun subscribe(fullName: String?): Response<SubscribeResponse>
