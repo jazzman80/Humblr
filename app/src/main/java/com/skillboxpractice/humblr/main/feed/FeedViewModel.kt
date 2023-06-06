@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.LoadState
 import androidx.paging.cachedIn
+import com.skillboxpractice.humblr.core.LoadingState
 import com.skillboxpractice.humblr.core.Repository
 import com.skillboxpractice.humblr.entity.SubscribeResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,6 +26,9 @@ class FeedViewModel @Inject constructor(
 
     val error: LiveData<Boolean> get() = _error
     private val _error = MutableLiveData(false)
+
+    val loadingState: LiveData<LoadingState> get() = _loadingState
+    private val _loadingState = MutableLiveData(LoadingState.LOADING)
 
     val onTabSelected = fun(position: Int) {
         viewModelScope.launch {
@@ -47,6 +52,17 @@ class FeedViewModel @Inject constructor(
                 subsAdapter.submitData(it)
             }
         }
+
+        viewModelScope.launch {
+            subsAdapter.loadStateFlow.collectLatest { loadState ->
+                if (loadState.refresh is LoadState.Loading) _loadingState.value =
+                    LoadingState.LOADING
+                else if (loadState.refresh is LoadState.Error) _loadingState.value =
+                    LoadingState.ERROR
+                else if (loadState.refresh is LoadState.NotLoading) _loadingState.value =
+                    LoadingState.SUCCESS
+            }
+        }
     }
 
     override val onSubscribeClick = fun(fullName: String?, isSubscribed: Boolean) {
@@ -68,17 +84,5 @@ class FeedViewModel @Inject constructor(
         }
 
     }
-
-//        viewModelScope.launch {
-//            newSubsAdapter.loadStateFlow.collectLatest { loadState ->
-//                if (loadState.refresh is LoadState.Loading) _loadingState.value =
-//                    LoadingState.LOADING
-//                else if (loadState.refresh is LoadState.Error) _loadingState.value =
-//                    LoadingState.ERROR
-//                else if (loadState.refresh is LoadState.NotLoading) _loadingState.value =
-//                    LoadingState.SUCCESS
-//            }
-//        }
-
 
 }

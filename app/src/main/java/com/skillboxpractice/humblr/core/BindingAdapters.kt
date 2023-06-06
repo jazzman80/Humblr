@@ -24,15 +24,21 @@ fun onTabSelected(tabLayout: TabLayout, listener: (Int) -> Unit) {
     })
 }
 
-@BindingAdapter("app:visibleOnNew")
-fun visibleOnNew(view: View, listType: SubListType) {
-    if (listType == SubListType.NEW) view.visibility = View.VISIBLE
+@BindingAdapter("app:visibleOnSuccess")
+fun visibleOnSuccess(view: View, loadingState: LoadingState) {
+    if (loadingState == LoadingState.SUCCESS) view.visibility = View.VISIBLE
     else view.visibility = View.GONE
 }
 
-@BindingAdapter("app:visibleOnPopular")
-fun visibleOnPopular(view: View, listType: SubListType) {
-    if (listType == SubListType.POPULAR) view.visibility = View.VISIBLE
+@BindingAdapter("app:visibleOnLoad")
+fun visibleOnLoad(view: View, loadingState: LoadingState) {
+    if (loadingState == LoadingState.LOADING) view.visibility = View.VISIBLE
+    else view.visibility = View.GONE
+}
+
+@BindingAdapter("app:visibleOnError")
+fun visibleOnError(view: View, loadingState: LoadingState) {
+    if (loadingState == LoadingState.ERROR) view.visibility = View.VISIBLE
     else view.visibility = View.GONE
 }
 
