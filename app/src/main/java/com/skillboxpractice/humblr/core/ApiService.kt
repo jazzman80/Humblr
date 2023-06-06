@@ -3,6 +3,7 @@ package com.skillboxpractice.humblr.core
 import com.skillboxpractice.humblr.entity.Access
 import com.skillboxpractice.humblr.entity.Refresh
 import com.skillboxpractice.humblr.entity.SubsListing
+import com.skillboxpractice.humblr.entity.SubscribeResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -32,9 +33,13 @@ interface ApiService {
     @GET("/subreddits/new")
     fun getNewSubs(
         @Header("Authorization") auth: String,
-        @Query("after") after: String?,
-//        @Query("before") before: String?,
-//        @Query("count") count: Int,
-//        @Query("limit") limit: Int
+        @Query("after") after: String?
     ): Call<SubsListing>
+
+    @POST("api/subscribe")
+    fun subscribe(
+        @Header("Authorization") auth: String,
+        @Query("action") action: String?,
+        @Query("sr") sr: String?
+    ): Call<SubscribeResponse>
 }

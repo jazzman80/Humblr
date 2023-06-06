@@ -7,6 +7,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.skillboxpractice.humblr.entity.Access
 import com.skillboxpractice.humblr.entity.Subreddit
+import com.skillboxpractice.humblr.entity.SubscribeResponse
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Response
 import retrofit2.awaitResponse
@@ -34,7 +35,7 @@ class RepositoryImplementation @Inject constructor(
     private var state = "state"
     private val redirectUri = "com.skillboxpractice.humblr://humblr"
     private val duration = "permanent"
-    private val scope = "read"
+    private val scope = "read subscribe"
     private val authString = Base64.getEncoder().encodeToString("$clientId:".toByteArray())
 
     private var _accessToken = ""
@@ -142,6 +143,22 @@ class RepositoryImplementation @Inject constructor(
                 save()
             }
         }
+    }
+
+    override suspend fun unsubscribe(fullName: String?): Response<SubscribeResponse> {
+        return apiService.subscribe(
+            "Bearer $_accessToken",
+            "unsub",
+            fullName
+        ).awaitResponse()
+    }
+
+    override suspend fun subscribe(fullName: String?): Response<SubscribeResponse> {
+        return apiService.subscribe(
+            "Bearer $_accessToken",
+            "sub",
+            fullName
+        ).awaitResponse()
     }
 
     private fun save() {

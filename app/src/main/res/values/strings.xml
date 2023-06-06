@@ -11,6 +11,7 @@
     <string name="login">Login</string>
     <string name="tagline">Find friends with Humblr</string>
     <string name="auth_error">An error occurred during authorization. Try logging in later</string>
+    <string name="network_error">Network error. Try again later</string>
     <string name="profile" translatable="false">profile</string>
     <string name="favorites" translatable="false">favorites</string>
     <string name="feed" translatable="false">feed</string>

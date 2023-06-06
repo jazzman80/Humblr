@@ -1,6 +1,7 @@
 package com.skillboxpractice.humblr.core
 
 import android.view.View
+import android.widget.CheckBox
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import coil.imageLoader
@@ -57,4 +58,11 @@ fun loadImage(view: ImageView, imageUrl: String?) {
         )
         .build()
     imageLoader.enqueue(request)
+}
+
+@BindingAdapter(value = ["app:onSubscribe", "app:subredditName"], requireAll = true)
+fun onSubscribe(view: CheckBox, listener: (String?, Boolean) -> Unit, fullName: String?) {
+    view.setOnClickListener {
+        listener(fullName, !view.isChecked)
+    }
 }

@@ -10,7 +10,9 @@ import com.skillboxpractice.humblr.R
 import com.skillboxpractice.humblr.databinding.ItemSubredditBinding
 import com.skillboxpractice.humblr.entity.Subreddit
 
-class FeedAdapter : PagingDataAdapter<Subreddit, FeedAdapter.ViewHolder>(
+class FeedAdapter(
+    private val parentViewModel: ParentViewModel
+) : PagingDataAdapter<Subreddit, FeedAdapter.ViewHolder>(
     DiffCallback()
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,6 +26,8 @@ class FeedAdapter : PagingDataAdapter<Subreddit, FeedAdapter.ViewHolder>(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.binding.parentViewModel = this.parentViewModel
+        val fuckYou = getItem(position)
         holder.binding.model = getItem(position)
     }
 
@@ -46,7 +50,6 @@ class FeedAdapter : PagingDataAdapter<Subreddit, FeedAdapter.ViewHolder>(
     }
 
     interface ParentViewModel {
-        fun onPhotoClick(id: String)
-        fun onLikePhoto(id: String, likedByUser: Boolean)
+        val onSubscribeClick: (String, Boolean) -> Unit
     }
 }

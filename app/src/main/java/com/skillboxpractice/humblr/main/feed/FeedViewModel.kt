@@ -7,21 +7,26 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.skillboxpractice.humblr.core.Repository
 import com.skillboxpractice.humblr.core.SubListType
+import com.skillboxpractice.humblr.entity.SubscribeResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
 class FeedViewModel @Inject constructor(
     private val repository: Repository
-) : ViewModel() {
+) : ViewModel(), FeedAdapter.ParentViewModel {
     private val newSubsFlow = repository.getNewSubs().flow.cachedIn(viewModelScope)
 
-    val newSubsAdapter = FeedAdapter()
+    val newSubsAdapter = FeedAdapter(this)
 
     val subsListType: LiveData<SubListType> get() = _subsListType
     private val _subsListType = MutableLiveData(SubListType.NEW)
+
+    val error: LiveData<Boolean> get() = _error
+    private val _error = MutableLiveData(false)
 
     val onTabSelected = fun(position: Int) {
         if (position == 0) _subsListType.value = SubListType.NEW
@@ -36,6 +41,22 @@ class FeedViewModel @Inject constructor(
                 newSubsAdapter.submitData(pagingData)
             }
         }
+    }
+
+    override val onSubscribeClick = fun(fullName: String?, isSubscribed: Boolean) {
+
+        viewModelScope.launch {
+            try {
+                val result: Response<SubscribeResponse> =
+                    if (isSubscribed) repository.unsubscribe(fullName)
+                    else repository.subscribe(fullName)
+
+                if (!result.isSuccessful) _error.value = true
+            } catch (e: Exception) {
+                _error.value = true
+            }
+        }
+
     }
 
 //        viewModelScope.launch {

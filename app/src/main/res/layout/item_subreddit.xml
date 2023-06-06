@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="parentViewModel"
+            type="com.skillboxpractice.humblr.main.feed.FeedAdapter.ParentViewModel" />
+
+        <variable
             name="model"
             type="com.skillboxpractice.humblr.entity.Subreddit" />
     </data>
@@ -46,7 +50,10 @@
                     tools:text="@tools:sample/lorem/random" />
 
                 <CheckBox
+                    android:checked="@{model.data.userIsSubscriber}"
+                    app:onSubscribe="@{parentViewModel.onSubscribeClick}"
                     android:id="@+id/subscribe_icon"
+                    app:subredditName="@{model.data.name}"
                     app:buttonIcon="@drawable/selector_subscribe"
                     app:buttonIconTint="@color/color_subscribe"
                     android:layout_width="wrap_content"
