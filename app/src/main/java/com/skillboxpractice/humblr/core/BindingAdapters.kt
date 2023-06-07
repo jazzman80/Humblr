@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import coil.imageLoader
 import coil.request.ImageRequest
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.textfield.TextInputLayout
 import com.skillboxpractice.humblr.R
 
 @BindingAdapter("app:onTabSelected")
@@ -70,5 +71,12 @@ fun loadImage(view: ImageView, imageUrl: String?) {
 fun onSubscribe(view: CheckBox, listener: (String?, Boolean) -> Unit, fullName: String?) {
     view.setOnClickListener {
         listener(fullName, !view.isChecked)
+    }
+}
+
+@BindingAdapter("app:onEndIconClick")
+fun onEndIconClick(view: TextInputLayout, listener: () -> Unit) {
+    view.setEndIconOnClickListener {
+        listener()
     }
 }

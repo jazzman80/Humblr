@@ -47,6 +47,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
+            app:onEndIconClick="@{viewModel.onSearch}"
             android:id="@+id/search_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

@@ -9,7 +9,11 @@
         android:id="@+id/feed"
         android:name="com.skillboxpractice.humblr.main.feed.FeedFragment"
         android:label="FeedFragment"
-        tools:layout="@layout/fragment_feed" />
+        tools:layout="@layout/fragment_feed">
+        <action
+            android:id="@+id/action_feed_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favorites"
         android:name="com.skillboxpractice.humblr.main.FavoritesFragment"
@@ -20,4 +24,9 @@
         android:name="com.skillboxpractice.humblr.main.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.skillboxpractice.humblr.main.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search" />
 </navigation>
