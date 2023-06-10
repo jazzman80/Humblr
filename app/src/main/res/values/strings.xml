@@ -18,4 +18,5 @@
     <string name="search">Search</string>
     <string name="new_feeds">New</string>
     <string name="popular">Popular</string>
+    <string name="search_for">Search for </string>
 </resources>

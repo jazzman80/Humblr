@@ -8,13 +8,10 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.skillboxpractice.humblr.R
 import com.skillboxpractice.humblr.databinding.FragmentFeedBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FeedFragment : Fragment() {
@@ -35,6 +32,7 @@ class FeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.fragment = this
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -47,29 +45,17 @@ class FeedFragment : Fragment() {
                 Toast.LENGTH_LONG
             ).show()
         }
-
-//        viewModel.navigateToSearch.observe(
-//            viewLifecycleOwner
-//        ){
-//            if (it){
-//                val action = FeedFragmentDirections.actionFeedToSearchFragment()
-//                findNavController().navigate(action)
-//            }
-//        }
-
-        lifecycleScope.launch {
-            viewModel.navigateToSearch.collectLatest {
-                if (it) {
-                    val action = FeedFragmentDirections.actionFeedToSearchFragment()
-                    findNavController().navigate(action)
-                }
-            }
-        }
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    val onSearch = fun() {
+        val query = binding.search.text.toString()
+        val action = FeedFragmentDirections.actionFeedToSearchFragment(query)
+        findNavController().navigate(action)
+    }
+
 }

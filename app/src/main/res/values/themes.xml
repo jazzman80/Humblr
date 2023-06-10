@@ -16,6 +16,7 @@
 
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
+        <item name="toolbarStyle">@style/Widget.App.MaterialToolbar</item>
 
     </style>
 
@@ -47,6 +48,12 @@
         <item name="boxStrokeWidth">2dp</item>
         <item name="endIconDrawable">@drawable/ic_search</item>
         <item name="endIconMode">custom</item>
+    </style>
+
+    <style name="Widget.App.MaterialToolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="navigationIcon">@drawable/ic_back</item>
+        <item name="titleTextColor">?attr/colorOnPrimary</item>
     </style>
 
 </resources>

@@ -10,8 +10,6 @@ import com.skillboxpractice.humblr.core.LoadingState
 import com.skillboxpractice.humblr.core.Repository
 import com.skillboxpractice.humblr.entity.SubscribeResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -28,9 +26,6 @@ class FeedViewModel @Inject constructor(
 
     val error: LiveData<Boolean> get() = _error
     private val _error = MutableLiveData(false)
-
-    val navigateToSearch: StateFlow<Boolean> get() = _navigateToSearch
-    private val _navigateToSearch = MutableSharedFlow(0, false)
 
     val loadingState: LiveData<LoadingState> get() = _loadingState
     private val _loadingState = MutableLiveData(LoadingState.LOADING)
@@ -88,11 +83,6 @@ class FeedViewModel @Inject constructor(
             }
         }
 
-    }
-
-    val onSearch = fun() {
-        _navigateToSearch.value = true
-        //_navigateToSearch.value = false
     }
 
 }

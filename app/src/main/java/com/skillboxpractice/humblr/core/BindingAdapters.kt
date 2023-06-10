@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import coil.imageLoader
 import coil.request.ImageRequest
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
 import com.skillboxpractice.humblr.R
@@ -77,6 +78,13 @@ fun onSubscribe(view: CheckBox, listener: (String?, Boolean) -> Unit, fullName: 
 @BindingAdapter("app:onEndIconClick")
 fun onEndIconClick(view: TextInputLayout, listener: () -> Unit) {
     view.setEndIconOnClickListener {
+        listener()
+    }
+}
+
+@BindingAdapter("app:onNavigationIconClick")
+fun onNavigationIconClick(view: MaterialToolbar, listener: () -> Unit) {
+    view.setNavigationOnClickListener {
         listener()
     }
 }

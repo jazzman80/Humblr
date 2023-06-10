@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="fragment"
+            type="com.skillboxpractice.humblr.main.feed.FeedFragment" />
+
+        <variable
             name="viewModel"
             type="com.skillboxpractice.humblr.main.feed.FeedViewModel" />
 
@@ -47,7 +51,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
-            app:onEndIconClick="@{viewModel.onSearch}"
+            app:onEndIconClick="@{fragment.onSearch}"
             android:id="@+id/search_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -56,6 +60,7 @@
             app:layout_constraintTop_toTopOf="@id/top">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/search"

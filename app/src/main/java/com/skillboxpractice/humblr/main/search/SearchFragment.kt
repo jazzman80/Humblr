@@ -6,12 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.skillboxpractice.humblr.R
 import com.skillboxpractice.humblr.databinding.FragmentSearchBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
+    private val viewModel: SearchViewModel by viewModels()
+    private val args: SearchFragmentArgs by navArgs()
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
@@ -27,16 +33,19 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //binding.fragment = this
+        binding.viewModel = viewModel
+        binding.fragment = this
         binding.lifecycleOwner = this
 
-        binding.button.setOnClickListener {
-            findNavController().popBackStack()
-        }
+        viewModel.setQuery(args.query)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    val navigateBack = fun() {
+        findNavController().popBackStack()
     }
 }

@@ -16,4 +16,5 @@
     <string name="popular">Популярное</string>
     <string name="new_feeds">Новое</string>
     <string name="network_error">Ошибка сети. Попробуйте повторить позже</string>
+    <string name="search_for">Поиск </string>
 </resources>
